@@ -1,4 +1,4 @@
 #! python3
-import os
+import os, requests
 dir = os.getcwd();
 print("my name:"+dir)
