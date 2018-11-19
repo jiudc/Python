@@ -1,2 +1,4 @@
-cat =['1', 'dog', 2]
-cat[1]
+#! python3
+import os
+dir = os.getcwd();
+print("my name:"+dir)
