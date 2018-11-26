@@ -20,7 +20,7 @@ def creatlog(logname):
     currenttime = time.strftime("%Y-%m-%d", time.localtime())
     suffix = ".log"
     logfile = logname + "-" + currenttime + suffix
-    path = r'C:\Users\Liudingchao\Documents'
+    path = r'D:\Srclib\doc'
     os.chdir(os.path.join(path))
     os.makedirs('logs', exist_ok=True)
     os.chdir(os.getcwd() + os.sep + 'logs')
@@ -49,9 +49,9 @@ def creatlog(logname):
 
 
 logger = creatlog("picture")  # 建立日志
-startUrl = r'http://1024.91rsxmza.xyz/pw/htm_data/15/1811/1404070.html'
+startUrl = r'http://1024.91rsxmza.xyz/pw/htm_data/15/1811/1404062.html'
 dirName = "Muse"
-TIMEOUT = 100
+TIMEOUT = 20
 head = {'User-Agent': 'Mozilla/5.0'}
 os.makedirs(dirName, exist_ok=True)
 os.chdir(os.path.join(os.getcwd(), dirName))
@@ -66,16 +66,18 @@ try:
     # 设置chrome浏览器无界面模式
     chrome_options.add_argument('--headless')
     browser = webdriver.Chrome(chrome_options=chrome_options)
+    # browser = webdriver.Chrome()
+
     try:
         browser.get(startUrl)
-        WebDriverWait(browser, TIMEOUT, 0.5).until(EC.presence_of_all_elements_located(locatorImg))
-        WebDriverWait(browser, TIMEOUT, 0.5).until(EC.presence_of_element_located(locatorTpc))
-        WebDriverWait(browser, TIMEOUT, 0.5).until(EC.presence_of_element_located(locatorTitle))
-        WebDriverWait(browser, TIMEOUT, 0.5).until(EC.element_to_be_clickable(clickNext))
     except TimeoutException:
         browser.execute_script("window.stop();")  # 调用js脚本使浏览器停止加载
 
     while True:
+        WebDriverWait(browser, TIMEOUT, 0.5).until(EC.presence_of_all_elements_located(locatorImg))
+        WebDriverWait(browser, TIMEOUT, 0.5).until(EC.presence_of_element_located(locatorTpc))
+        WebDriverWait(browser, TIMEOUT, 0.5).until(EC.presence_of_element_located(locatorTitle))
+        WebDriverWait(browser, TIMEOUT, 0.5).until(EC.element_to_be_clickable(clickNext))
         logger.info("Program is processing:" + browser.current_url)
         elems = browser.find_elements_by_css_selector("#read_tpc img")
         title = browser.find_element_by_id("subject_tpc")
